@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+  
+  if ($.trim($(this).text()) === "Feed me words!") {
+  alert("I bet all those words are gonna dissapear...");
+    $(this).text("I'm gonna hurl!");
+} else {
+alert("Guess what's gonna re-appear!?");
+    $(this).text('Feed me words!');        
+}
+    $("p").fadeToggle("fast");
+	$("h2").fadeToggle("slow");
+  });
+});
+</script>
+<script>
+$(document).ready(function()
+{
+	$("#empStar1").click(function()
+	{
+		$("#empStar1").attr('src',"pics/fullStar.jpg");
+		$("#empStar2").attr('src',"pics/emptyStar.jpg");
+		$("#empStar3").attr('src',"pics/emptyStar.jpg");
+		$("#empStar4").attr('src',"pics/emptyStar.jpg");
+		$("#empStar5").attr('src',"pics/emptyStar.jpg");
+		$("#comment").text("You must really hate this game");
+	});
+	$("#empStar2").click(function()
+	{
+		$("#empStar1").attr('src',"pics/fullStar.jpg");
+		$("#empStar2").attr('src',"pics/fullStar.jpg");
+		$("#empStar3").attr('src',"pics/emptyStar.jpg");
+		$("#empStar4").attr('src',"pics/emptyStar.jpg");
+		$("#empStar5").attr('src',"pics/emptyStar.jpg");
+		$("#comment").text("At least you think this game is worth finishing");
+	});
+	$("#empStar3").click(function()
+	{
+		$("#empStar1").attr('src',"pics/fullStar.jpg");
+		$("#empStar2").attr('src',"pics/fullStar.jpg");
+		$("#empStar3").attr('src',"pics/fullStar.jpg");
+		$("#empStar4").attr('src',"pics/emptyStar.jpg");
+		$("#empStar5").attr('src',"pics/emptyStar.jpg");
+		$("#comment").text("Tis' a game you deem slightly above average");
+	});
+	$("#empStar4").click(function()
+	{
+		$("#empStar1").attr('src',"pics/fullStar.jpg");
+		$("#empStar2").attr('src',"pics/fullStar.jpg");
+		$("#empStar3").attr('src',"pics/fullStar.jpg");
+		$("#empStar4").attr('src',"pics/fullStar.jpg");
+		$("#empStar5").attr('src',"pics/emptyStar.jpg");
+		$("#comment").text("A game you feel obligated to refer to others");
+	});
+	$("#empStar5").click(function()
+	{
+		$("#empStar1").attr('src',"pics/fullStar.jpg");
+		$("#empStar2").attr('src',"pics/fullStar.jpg");
+		$("#empStar3").attr('src',"pics/fullStar.jpg");
+		$("#empStar4").attr('src',"pics/fullStar.jpg");
+		$("#empStar5").attr('src',"pics/fullStar.jpg");
+		$("#comment").text("You truly believe this one of the most perfect games ever made");
+	});
+});
+</script>
+
+</head>
+<body>
+
+<h2>These are words</h2>
+<p>These are also words.</p>
+<p>MORE WORDS!</p>
+<button>Feed me words!</button></br></br>
+<div>
+<img id="empStar1" src="pics/emptyStar.jpg" height="50" width="50">
+<img id="empStar2" src="pics/emptyStar.jpg" height="50" width="50">
+<img id="empStar3" src="pics/emptyStar.jpg" height="50" width="50">
+<img id="empStar4" src="pics/emptyStar.jpg" height="50" width="50">
+<img id="empStar5" src="pics/emptyStar.jpg" height="50" width="50">
+</div>
+<div id="comment">Choose your level of love/hate for this game</div>
+
+</body>
+</html>

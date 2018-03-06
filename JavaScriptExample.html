@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+<body id="back">
+
+<hi><font color="red">If you want to know the time and date</font></h1><br/>
+<button type="button" onClick="dateFunction()">Press Me!</button>
+<p id="date"></p>
+
+<p><font color="red">If you just want the background to change to red</font></p>
+<button type="button" onClick="colorFunction()">Press Me instead</button>
+
+<script>
+function dateFunction()
+{
+document.getElementById("date").innerHTML = Date();
+}
+</script>
+
+<script>
+function colorFunction()
+{
+document.getElementById("back").bgcolor = "red"
+}
+</script>
+
+</body>
+
+</html>
