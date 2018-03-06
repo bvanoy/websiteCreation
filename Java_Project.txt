@@ -1,0 +1,640 @@
+package programs; 
+
+/***********************************************************************
+Program Name: CourseProject.java
+Programmer's Name: Brian Vanoy
+Program Description: Using JTabbedPane set up mutiple tabs to add customers, contractors, calculate pool and spa size as well as a temp calculator.
+***********************************************************************/
+
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.*;
+import java.util.*;
+
+public class CourseProject extends JFrame implements ActionListener, ItemListener
+{
+	private JTabbedPane layoutPane = new JTabbedPane();
+	private JPanel poolsPnl, hotTubPnl, tempCalcPnl, lengCalcPnl, genPnl, optPnl, custPnl, contPnl;
+	private JTextField optionText = new JTextField(25);
+	
+	public CourseProject() throws IOException
+	{
+		setTitle("Enter a company name in the options tab");
+				
+		//initialize Panels
+		poolsPnl = new JPanel();
+		hotTubPnl = new JPanel();
+		tempCalcPnl = new JPanel();
+		lengCalcPnl = new JPanel();
+		genPnl = new JPanel();
+		optPnl = new JPanel();
+		custPnl = new JPanel();
+		contPnl = new JPanel();
+						
+		/*add Labels to Panels and associated functions*/
+		//////////////////Pools tab
+			JLabel length = new JLabel("Enter the pool's length (ft):");
+			final JTextField lenTxt = new JTextField(10);
+			JLabel width = new JLabel("Enter the pool's width (ft):");
+			final JTextField widTxt = new JTextField(10);
+			JLabel depth = new JLabel("Enter the pool's depth (ft):");
+			final JTextField depTxt = new JTextField(10);
+			final JButton calcVolBtn = new JButton("Calculate Volume");
+			JLabel volume = new JLabel("The pool's volume is (ft^3)");
+			final JTextField volTxt = new JTextField(10);
+			volTxt.setEditable(false);
+			final JLabel error = new JLabel();
+			final JLabel error12 = new JLabel();
+			calcVolBtn.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == calcVolBtn)
+						{
+							String len = lenTxt.getText(), wid = widTxt.getText(), dep = depTxt.getText();
+							if(len.trim().length() != 0 && wid.trim().length() != 0 && dep.trim().length() != 0)
+							{
+								
+								try
+								{
+									int l = Integer.parseInt(len);
+									int w = Integer.parseInt(wid);
+									int d = Integer.parseInt(dep);
+									int vol = (l*w*d);
+									error.setText("");
+									error12.setText("");
+									volTxt.setText(String.valueOf(vol));
+								}
+								catch (NumberFormatException ex)
+								{
+									error12.setText("Please enter a valid number!");
+								}
+								
+							}
+							else
+							{								
+								error.setText("Please fill out all fields!");
+								return;
+							}
+						}
+					}
+				}
+			);
+			final JButton exitBtn5 = new JButton("Exit");
+			exitBtn5.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == exitBtn5)
+						{
+							System.exit(0);
+						}
+					}
+				}
+			);
+			
+		poolsPnl.add(length);
+		poolsPnl.add(lenTxt);
+		poolsPnl.add(width);
+		poolsPnl.add(widTxt);
+		poolsPnl.add(depth);
+		poolsPnl.add(depTxt);
+		poolsPnl.add(calcVolBtn);
+		poolsPnl.add(exitBtn5);
+		poolsPnl.add(volume);
+		poolsPnl.add(volTxt);
+		poolsPnl.add(error);
+		poolsPnl.add(error12);
+			
+		//////////////////Hot Tub tab
+			final JRadioButton round = new JRadioButton("Round Tub");
+			final JRadioButton oval = new JRadioButton("Oval Tub");
+			final JLabel length2 = new JLabel("Enter the pool's length (ft):");
+			final JTextField lenTxt2 = new JTextField(10);
+			final JLabel width2 = new JLabel("Enter the pool's width (ft):");
+			final JTextField widTxt2 = new JTextField(10);
+			final JLabel depth2 = new JLabel("Enter the pool's depth (ft):");
+			final JTextField depTxt2 = new JTextField(10);
+			final JButton calcVolBtn2 = new JButton("Calculate Volume");
+			JLabel volume2 = new JLabel("The pool's volume is (ft^3)");
+			final JButton exitBtn6 = new JButton("Exit");
+			final JTextField volTxt2 = new JTextField(10);
+			final JLabel error2 = new JLabel();
+			final JLabel error21 = new JLabel();
+			volTxt2.setEditable(false);
+			final ButtonGroup bg = new ButtonGroup();
+			bg.add(round);
+			bg.add(oval);
+			add(round);
+			add(oval);
+			round.addItemListener
+			(
+				new ItemListener() 
+				{
+					public void itemStateChanged(ItemEvent e) 
+					{
+						if (e.getStateChange() == ItemEvent.SELECTED)
+						{
+							lenTxt2.setText("");
+							widTxt2.setText("");
+							depTxt2.setText("");
+							volTxt2.setText("");
+							widTxt2.setEditable(false);
+							widTxt2.setEnabled(false);
+						}
+						
+							
+						calcVolBtn2.addActionListener
+						(
+							new ActionListener()
+							{
+								public void actionPerformed(ActionEvent e)
+								{			
+									if (bg.getSelection() != null && round.isSelected())
+									{
+										if (e.getSource() == calcVolBtn2)
+										{
+											String len2 = lenTxt2.getText(), dep2 = depTxt2.getText();
+											if(len2.trim().length() != 0 && dep2.trim().length() != 0)
+											{								
+												try
+												{
+													int l2 = Integer.parseInt(len2);
+													int d2 = Integer.parseInt(dep2);
+													int vol2 = (int) (3.14*((l2/2)^2)*d2);
+													widTxt2.setText(len2);
+													error2.setText("");
+													error21.setText("");
+													volTxt2.setText(String.valueOf(vol2));
+												}
+												catch (NumberFormatException n)
+												{
+													error21.setText("Please enter valid number!");
+												}						
+																				
+											}
+											else
+											{								
+												error2.setText("Please fill out all fields!");
+												return;
+											}
+										}
+									}									
+								}
+							}
+						);
+					}
+				}
+			);
+			oval.addItemListener
+			(
+				new ItemListener() 
+				{
+					public void itemStateChanged(ItemEvent e)
+					{
+						if (e.getStateChange() == ItemEvent.SELECTED)
+						{
+							lenTxt2.setText("");
+							widTxt2.setText("");
+							depTxt2.setText("");
+							volTxt2.setText("");
+							widTxt2.setEditable(true);
+							widTxt2.setEnabled(true);
+						}
+						calcVolBtn2.addActionListener
+						(
+							new ActionListener()
+							{
+								public void actionPerformed(ActionEvent e)
+								{										
+									if (bg.getSelection() != null && oval.isSelected())
+									{
+										if (e.getSource() == calcVolBtn2)
+										{
+											String len2 = lenTxt2.getText(), wid2 = widTxt2.getText(), dep2 = depTxt2.getText();
+											if(len2.trim().length() != 0 && wid2.trim().length() != 0 && dep2.trim().length() != 0)
+											{								
+												try
+												{
+													int l2 = Integer.parseInt(len2);
+													int w2 = Integer.parseInt(wid2);
+													int d2 = Integer.parseInt(dep2);
+													int vol2 = (int) (3.14*((l2 * w2)^2)*d2);
+													error2.setText("");
+													error21.setText("");
+													volTxt2.setText(String.valueOf(vol2));
+												}
+												catch (NumberFormatException n)
+												{
+													error21.setText("Please enter valid number!");
+												}						
+																				
+											}
+											else
+											{								
+												error2.setText("Please fill out all fields!");
+												return;
+											}
+										}
+									}
+								}
+							}
+						);
+					}
+				}
+			);
+			exitBtn6.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == exitBtn6)
+						{
+							System.exit(0);
+						}
+					}
+				}
+			);
+		hotTubPnl.add(round);
+		hotTubPnl.add(oval);
+		hotTubPnl.add(length2);
+		hotTubPnl.add(lenTxt2);
+		hotTubPnl.add(width2);
+		hotTubPnl.add(widTxt2);
+		hotTubPnl.add(depth2);
+		hotTubPnl.add(depTxt2);
+		hotTubPnl.add(calcVolBtn2);
+		hotTubPnl.add(exitBtn6);
+		hotTubPnl.add(volume2);
+		hotTubPnl.add(volTxt2);
+		hotTubPnl.add(error2);
+		hotTubPnl.add(error21);
+		
+		//////////////////Temperature Calculator tab
+			JLabel tempLbl = new JLabel("Enter Temperature: ");
+			final JTextField tempTxt = new JTextField(10);
+				String str[] = {"C", "F"};
+				final JComboBox jcb = new JComboBox(str);
+			JLabel resLbl = new JLabel("Result: ");
+			final JTextField resTxt = new JTextField(20);
+			resTxt.setEditable(false);
+			final JLabel oppTemp = new JLabel("F");
+			final JButton convertBtn = new JButton("Convert");
+			final JButton exitBtn7 = new JButton("Exit");
+			final JTextField sysMessage = new JTextField(17);
+			sysMessage.setText("System Messages");
+			sysMessage.setEditable(false);
+			convertBtn.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						jcb.addItemListener
+						(
+							new ItemListener()
+							{
+								public void itemStateChanged(ItemEvent ei)
+								{
+									if (jcb.getSelectedIndex() == 0)
+									{
+										oppTemp.setText("F");
+									}
+									else
+									{
+										oppTemp.setText("C");
+									}									
+								}
+							}
+						);
+						if (e.getSource() == convertBtn && tempTxt.getText().trim().length() == 0)
+						{
+							tempTxt.setText("0");
+							int result = 32;
+							
+							resTxt.setText(String.valueOf(result));
+							sysMessage.setText("Value set to zero");
+						}
+						if (e.getSource() == convertBtn && jcb.getSelectedIndex() == 1)
+						{
+							String t = tempTxt.getText();
+							int tm = Integer.parseInt(t);
+							int tem = (tm - 32) * 5/9;
+							
+							resTxt.setText(String.valueOf(tem));
+						}
+						else
+						{
+							String t = tempTxt.getText();
+							int tm = Integer.parseInt(t);
+							int tem = (tm * 9/5) + 32;
+							
+							resTxt.setText(String.valueOf(tem));
+						}
+					}
+				}
+			);	
+			exitBtn7.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == exitBtn7)
+						{
+							System.exit(0);
+						}
+					}
+				}
+			);
+		tempCalcPnl.add(tempLbl);
+		tempCalcPnl.add(tempTxt);
+		tempCalcPnl.add(jcb);
+		tempCalcPnl.add(resLbl);
+		tempCalcPnl.add(resTxt);
+		tempCalcPnl.add(oppTemp);
+		tempCalcPnl.add(convertBtn);
+		tempCalcPnl.add(exitBtn7);
+		tempCalcPnl.add(sysMessage);
+		
+		//////////////////Length Calculator tab
+			JTextField mill = new JTextField(6);
+				mill.setText("Millimeters");
+				mill.setEditable(false);
+			JTextField met = new JTextField(4);
+				met.setText("Meters");
+				met.setEditable(false);
+			JTextField yard = new JTextField(5);
+				yard.setText("Yards");
+				yard.setEditable(false);
+			JTextField feet = new JTextField(4);
+				feet.setText("Feet");
+				feet.setEditable(false);
+			JTextField inch = new JTextField(5);
+				inch.setText("Inches");
+				inch.setEditable(false);
+			final JTextField millTxt = new JTextField(6);
+			final JTextField metTxt = new JTextField(4);
+			final JTextField yardTxt = new JTextField(5);
+			final JTextField feetTxt = new JTextField(4);
+			final JTextField inchTxt = new JTextField(5);
+			final JButton convertBtn2 = new JButton("Convert");
+			final JButton exitBtn8 = new JButton("Exit");
+				
+			convertBtn2.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == convertBtn2)
+						{
+							String ft = feetTxt.getText();
+							double f = Integer.parseInt(ft);
+							inchTxt.setText(String.valueOf(f*12));
+							millTxt.setText(String.valueOf(f*304.8));
+							metTxt.setText(String.valueOf(f*.3048));
+							yardTxt.setText(String.valueOf(f*.333333));
+						}
+					}
+				}
+			);
+			exitBtn8.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == exitBtn8)
+						{
+							System.exit(0);
+						}
+					}
+				}
+			);
+		lengCalcPnl.add(mill);
+		lengCalcPnl.add(met);
+		lengCalcPnl.add(yard);
+		lengCalcPnl.add(feet);
+		lengCalcPnl.add(inch);
+		lengCalcPnl.add(millTxt);
+		lengCalcPnl.add(metTxt);
+		lengCalcPnl.add(yardTxt);
+		lengCalcPnl.add(feetTxt);
+		lengCalcPnl.add(inchTxt);
+		lengCalcPnl.add(convertBtn2);
+		lengCalcPnl.add(exitBtn8);
+		
+		//////////////////General tab
+			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date date = new Date();
+			String dTime = dateFormat.format(date);
+		JLabel genLbl = new JLabel("Today's Date: " + dTime);
+		final JButton exitBtn = new JButton("Exit");
+		exitBtn.addActionListener
+		(
+			new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					if (e.getSource() == exitBtn)
+					{
+						System.exit(0);
+					}
+				}
+			}
+		);
+		genPnl.add(genLbl);
+		genPnl.add(exitBtn);
+		
+		////////////////////Options tab
+		JLabel optLbl = new JLabel("Change Company Name: ");
+		final JButton setNameBtn = new JButton("Set New Name");
+		setNameBtn.addActionListener
+		(
+			new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					if (e.getSource() == setNameBtn)
+					{
+						setTitle(optionText.getText());
+						optionText.setText("");
+					}
+				}
+			}
+		);
+		final JButton exitBtn2 = new JButton("Exit");
+		exitBtn2.addActionListener
+		(
+			new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					if (e.getSource() == exitBtn2)
+					{
+						System.exit(0);
+					}
+				}
+			}
+		);
+		optPnl.add(optLbl);
+		optPnl.add(optionText);
+		optPnl.add(setNameBtn);
+		optPnl.add(exitBtn2);
+		
+		//////////////////Customer tab
+			final JTextArea custDisplay = new JTextArea(8,25);
+			final JButton exitBtn3 = new JButton("Exit");
+			final JTextArea messageArea = new JTextArea(2,25);
+			messageArea.setText("File customer.txt does not exist yet! Will be\ncreated when you add Contractor");
+				exitBtn3.addActionListener
+				(
+					new ActionListener()
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							if (e.getSource() == exitBtn3)
+							{
+								System.exit(0);
+							}
+						}
+					}
+				);
+			final JButton addCustBtn = new JButton("Add Customer");
+			addCustBtn.addActionListener
+			(
+					new ActionListener()
+					{
+						public void actionPerformed(ActionEvent e)
+						{
+							if (e.getSource() == addCustBtn)
+							{
+								custDisplay.setText("John Doe\n555 Back Alley Ln.\nColumbus\nOH\t45442\t513-878-8898");
+								messageArea.setText("Customer added!");
+//								setLayout(new FlowLayout());
+//								JPanel custInfoPnl = new JPanel();
+//									JLabel name = new JLabel("Customer Name");
+//								custInfoPnl.add(name);
+//								
+//								FileWriter fw;
+//								FileReader fr;
+//								try 
+//								{
+//									fw = new FileWriter("C:/customer.txt");
+//									fw.write("HELLO");
+//									fw.close();
+//									
+//									fr = new FileReader("C:/customer.txt");
+//									JOptionPane.showMessageDialog(null, fr);
+//								} catch (IOException e1) 
+//								{
+//									e1.printStackTrace();
+//								}
+							}
+						}
+					}
+			);
+			final JButton refBtn = new JButton("Refresh");
+			refBtn.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == refBtn)
+						{
+							messageArea.setText("Sorry, I could not figure out how to make\nthis tab work properly.");
+						}
+					}
+				}
+			);
+		custPnl.add(custDisplay);
+		custPnl.add(exitBtn3);
+		custPnl.add(addCustBtn);
+		custPnl.add(refBtn);
+		custPnl.add(messageArea);
+		
+		////////////////Contractor tab
+			final JTextArea contDisplay = new JTextArea(8,25);
+			final JButton exitBtn4 = new JButton("Exit");
+			final JButton addContBtn = new JButton("Add Contractor");
+			final JButton refBtn2 = new JButton("Refresh");
+			final JTextArea messageArea2 = new JTextArea(2,25);
+			messageArea2.setText("File contractor.txt does not exist yet! Will be\ncreated when you add Contractor");
+			addContBtn.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == addContBtn)
+						{
+							contDisplay.setText("John Doe\n555 Back Alley Ln.\nColumbus\nOH\t45442\t513-878-8898");
+							messageArea2.setText("Contractor added!");
+						}
+					}
+				}
+			);
+			exitBtn4.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == exitBtn4)
+						{
+							System.exit(0);
+						}
+					}
+				}
+			);
+			refBtn2.addActionListener
+			(
+				new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						if (e.getSource() == refBtn2)
+						{
+							messageArea2.setText("Sorry, I could not figure out how to make\nthis tab work properly.");
+						}
+					}
+				}
+			);
+		contPnl.add(contDisplay);
+		contPnl.add(exitBtn4);
+		contPnl.add(addContBtn);
+		contPnl.add(refBtn2);
+		contPnl.add(messageArea2);
+		
+		layoutPane.add("General", genPnl);
+		layoutPane.add("Options", optPnl);
+		layoutPane.add("Customers", custPnl);
+		layoutPane.add("Contractors", contPnl);
+		layoutPane.add("Pools", poolsPnl);
+		layoutPane.add("Hot Tubs", hotTubPnl);
+		layoutPane.add("Temp Calc", tempCalcPnl);
+		layoutPane.add("Length Calc", lengCalcPnl);
+		
+		
+		
+		this.add(layoutPane);
+	}
+		
+	public static void main(String[] args) throws IOException
+	{
+		CourseProject cp = new CourseProject();
+		cp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		cp.setSize(340,300);
+		cp.setVisible(true);
+	}
+
+}
